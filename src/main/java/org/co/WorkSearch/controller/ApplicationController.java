@@ -27,16 +27,31 @@ public class ApplicationController {
         return applicationService.getAllApplications();
     }
 
+    /**
+     * Gets an individual application by ID.
+     * @param id The ID of the application.
+     * @return The requested application.
+     */
     @GetMapping("/{id}")
     public ApplicationDto getApplicationById(@Min(1) @PathVariable Long id) {
         return applicationService.getApplication(id);
     }
 
+    /**
+     * Creates a new Application.
+     * @param applicationCreationDto The Application creation DTO.
+     * @return A new Application.
+     */
     @PostMapping
     public ApplicationDto createApplication(@Valid @RequestBody ApplicationCreationDto applicationCreationDto) {
         return applicationService.createApplication(applicationCreationDto);
     }
 
+    /**
+     * Updates an existing application.
+     * @param applicationUpdateDto The Application update DTO.
+     * @return The updated application.
+     */
     @PutMapping
     public ApplicationDto updateApplication(@Valid @RequestBody ApplicationUpdateDto applicationUpdateDto) {
         return applicationService.updateApplication(applicationUpdateDto);

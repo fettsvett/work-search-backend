@@ -37,4 +37,14 @@ public class Application {
     Instant created;
     @LastModifiedDate
     Instant updated;
+
+    @Override
+    public String toString() {
+        return "Application{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", positionName='" + positionName + '\'' +
+                ", applicationDate=" + applicationDate +
+                '}';
+    }
 }

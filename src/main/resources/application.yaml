@@ -3,9 +3,9 @@ spring:
     name: Work Search
   datasource:
     url: jdbc:postgresql://localhost:5432/worksearch
-    username: worksearch
-    password: RpfKhZlVNGZn7Rlme4io2HWE43aJnG2G
+    username: worksearch # in production use a secret manager to avoid sensitive data in repository
+    password: RpfKhZlVNGZn7Rlme4io2HWE43aJnG2G # in production use a secret manager to avoid sensitive data in repository
   jpa:
     hibernate:
-      ddl-auto: update # or create, create-drop, none
-    show-sql: true
+      ddl-auto: update # in production never set to update.
+    show-sql: true # remove in production

@@ -23,6 +23,10 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationCreationDtoToApplicationConverter applicationCreationDtoToApplicationConverter;
     private final ApplicationUpdateDtoToApplicationConverter applicationUpdateDtoToApplicationConverter;
 
+    /**
+     * Gets a list of all applications.
+     * @return A list of all of every application.
+     */
     @Override
     public List<ApplicationDto> getAllApplications() {
         return applicationRepository.findAll().stream()
@@ -30,6 +34,12 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets a single application by ID.
+     * @param id The application ID.
+     * @throws EntityNotFoundException thrown when the requested application does not exist.
+     * @return The requested application
+     */
     @Override
     public ApplicationDto getApplication(Long id) {
         return applicationRepository.findById(id)
@@ -37,6 +47,11 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Application ID: %s was not found!", id)));
     }
 
+    /**
+     * Creates a new application.
+     * @param applicationCreationDto The application creation DTO.
+     * @return A new and persisted application.
+     */
     @Override
     public ApplicationDto createApplication(ApplicationCreationDto applicationCreationDto) {
         Application application = applicationCreationDtoToApplicationConverter.convert(applicationCreationDto);
@@ -44,6 +59,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         return applicationToApplicationDtoConverter.convert(applicationRepository.save(application));
     }
 
+    /**
+     * Updates an existing application.
+     * @param applicationUpdateDto The application update DTO.
+     * @throws EntityNotFoundException thrown when the requested application does not exist.
+     * @return An updated and persisted application
+     */
     @Override
     public ApplicationDto updateApplication(ApplicationUpdateDto applicationUpdateDto) {
         Application application = applicationRepository.findById(applicationUpdateDto.getId())
