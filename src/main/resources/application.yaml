@@ -12,7 +12,6 @@ spring:
 
 work-search:
   cors:
-
     paths:
       - path: /**
         allow-credentials: true
