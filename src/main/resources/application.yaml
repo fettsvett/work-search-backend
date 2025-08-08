@@ -9,3 +9,19 @@ spring:
     hibernate:
       ddl-auto: update # in production never set to update.
     show-sql: true # remove in production
+
+work-search:
+  cors:
+    path: /**
+    allow-credentials: true
+    allowed-headers:
+      - '*'
+    allowed-origins:
+      - http://localhost:[*]
+      - https://localhost:[*]
+    allowed-methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
