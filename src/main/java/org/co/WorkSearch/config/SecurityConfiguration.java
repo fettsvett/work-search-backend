@@ -7,12 +7,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Global Security configuration.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
     /**
      * Configure the security filter chain.
-     * @param http The HttpSecurity configurator
+     * @param http The HttpSecurity builder.
      * @return A {@link SecurityFilterChain} bean.
      * @throws Exception any exception.
      */

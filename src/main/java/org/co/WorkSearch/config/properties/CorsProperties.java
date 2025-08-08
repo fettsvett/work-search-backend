@@ -1,24 +1,31 @@
 package org.co.WorkSearch.config.properties;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
-@Data
-@AllArgsConstructor
+/**
+ * Configuration properties class for configuring CORS globally.
+ */
+@Value
 @ConfigurationProperties(prefix = "work-search.cors")
 public class CorsProperties {
-    private List<Path> paths;
+    List<Path> paths;
 
-    @Data
-    @AllArgsConstructor
-    public static class Path {
-        private String path;
-        private boolean allowCredentials;
-        private List<String> allowedHeaders;
-        private List<String> allowedOrigins;
-        private List<String> allowedMethods;
-    }
+    /**
+     * Individual CORS path.
+     * @param path The URL pattern we want to match this path against.
+     * @param allowCredentials Allow credentials?
+     * @param allowedHeaders Allow these headers.
+     * @param allowedOrigins Allow these origins.
+     * @param allowedMethods Allow these HTTP methods.
+     */
+    public record Path(
+            String path,
+            boolean allowCredentials,
+            List<String> allowedHeaders,
+            List<String> allowedOrigins,
+            List<String> allowedMethods
+    ) {}
 }

@@ -7,12 +7,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+/**
+ * Global CORS configuration.
+ */
 @Configuration
 @Slf4j
 public class CorsConfiguration {
     /**
-     * CORS configuration properties.
-     * @return The configuration source
+     * Set CORS configurations based upon paths.
+     * This is configured via the {@link CorsProperties} Configuration properties class, which has it's values set in
+     * application.yaml.
+     * @return The {@link CorsConfigurationSource} bean.
      */
     @Bean
     public CorsConfigurationSource corsConfigurationSource(CorsProperties corsProperties) {
@@ -20,12 +25,16 @@ public class CorsConfiguration {
 
         corsProperties.getPaths().forEach(path -> {
             log.info("Adding CorsConfiguration for path {}", path);
-            org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-            configuration.setAllowCredentials(path.isAllowCredentials());
-            configuration.setAllowedOriginPatterns(path.getAllowedOrigins());
-            configuration.setAllowedMethods(path.getAllowedMethods());
-            configuration.setAllowedHeaders(path.getAllowedHeaders());
-            source.registerCorsConfiguration(path.getPath(), configuration);
+
+            org.springframework.web.cors.CorsConfiguration configuration =
+                    new org.springframework.web.cors.CorsConfiguration();
+
+            configuration.setAllowCredentials(path.allowCredentials());
+            configuration.setAllowedOriginPatterns(path.allowedOrigins());
+            configuration.setAllowedMethods(path.allowedMethods());
+            configuration.setAllowedHeaders(path.allowedHeaders());
+
+            source.registerCorsConfiguration(path.path(), configuration);
         });
 
         return source;

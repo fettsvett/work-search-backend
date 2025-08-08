@@ -8,6 +8,9 @@ import lombok.Value;
 
 import java.time.LocalDate;
 
+/**
+ * The Application Update DTO.
+ */
 @Value
 @Builder
 public class ApplicationUpdateDto {

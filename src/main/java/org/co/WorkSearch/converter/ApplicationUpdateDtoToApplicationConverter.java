@@ -6,11 +6,14 @@ import org.co.WorkSearch.model.Application;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class to merge {@link ApplicationUpdateDto} objects into {@link Application} entities.
+ */
 @Component
 @RequiredArgsConstructor
 public class ApplicationUpdateDtoToApplicationConverter {
     /**
-     * Merge {@link ApplicationUpdateDto} into {@link Application} objects.
+     * Merge {@link ApplicationUpdateDto} into {@link Application} entity.
      * @param application The {@link Application} entity.
      * @param source The {@link ApplicationUpdateDto} object.
      * @return A merged {@link Application} object with updated properties.

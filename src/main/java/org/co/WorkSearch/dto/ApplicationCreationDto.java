@@ -7,6 +7,9 @@ import lombok.Value;
 
 import java.time.LocalDate;
 
+/**
+ * The application Creation DTO.
+ */
 @Value
 @Builder
 public class ApplicationCreationDto {

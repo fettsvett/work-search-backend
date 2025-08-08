@@ -4,10 +4,12 @@ import jakarta.persistence.EntityNotFoundException;
 import org.co.WorkSearch.dto.ApplicationCreationDto;
 import org.co.WorkSearch.dto.ApplicationDto;
 import org.co.WorkSearch.dto.ApplicationUpdateDto;
-import org.co.WorkSearch.model.Application;
 
 import java.util.List;
 
+/**
+ * Service for manipulating Application entities.
+ */
 public interface ApplicationService {
     /**
      * Gets a list of all applications.

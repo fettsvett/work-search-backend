@@ -5,6 +5,9 @@ import org.co.WorkSearch.model.Application;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
+/**
+ * Class to convert {@link Application} entities into {@link ApplicationDto} objects.
+ */
 @Component
 public class ApplicationToApplicationDtoConverter {
     /**

@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service for manipulating Application entities.
+ */
 @Service
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {

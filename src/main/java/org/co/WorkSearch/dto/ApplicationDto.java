@@ -6,6 +6,9 @@ import lombok.Value;
 import java.time.Instant;
 import java.time.LocalDate;
 
+/**
+ * The Application DTO
+ */
 @Value
 @Builder
 public class ApplicationDto {
