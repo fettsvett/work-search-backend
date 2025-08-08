@@ -12,16 +12,17 @@ spring:
 
 work-search:
   cors:
-    path: /**
-    allow-credentials: true
-    allowed-headers:
-      - '*'
-    allowed-origins:
-      - http://localhost:[*]
-      - https://localhost:[*]
-    allowed-methods:
-      - GET
-      - POST
-      - PUT
-      - PATCH
-      - DELETE
+
+    paths:
+      - path: /**
+        allow-credentials: true
+        allowed-headers: '*'
+        allowed-origins:
+          - http://localhost:[*]
+          - https://localhost:[*]
+        allowed-methods:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE

@@ -10,9 +10,15 @@ import java.util.List;
 @AllArgsConstructor
 @ConfigurationProperties(prefix = "work-search.cors")
 public class CorsProperties {
-    private String path;
-    private boolean allowCredentials;
-    private List<String> allowedHeaders;
-    private List<String> allowedOrigins;
-    private List<String> allowedMethods;
+    private List<Path> paths;
+
+    @Data
+    @AllArgsConstructor
+    public static class Path {
+        private String path;
+        private boolean allowCredentials;
+        private List<String> allowedHeaders;
+        private List<String> allowedOrigins;
+        private List<String> allowedMethods;
+    }
 }

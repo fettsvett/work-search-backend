@@ -1,5 +1,6 @@
 package org.co.WorkSearch.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.co.WorkSearch.config.properties.CorsProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
+@Slf4j
 public class CorsConfiguration {
     /**
      * CORS configuration properties.
@@ -14,13 +16,17 @@ public class CorsConfiguration {
      */
     @Bean
     public CorsConfigurationSource corsConfigurationSource(CorsProperties corsProperties) {
-        org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
-        configuration.setAllowCredentials(corsProperties.isAllowCredentials());
-        configuration.setAllowedOriginPatterns(corsProperties.getAllowedOrigins());
-        configuration.setAllowedMethods(corsProperties.getAllowedMethods());
-        configuration.setAllowedHeaders(corsProperties.getAllowedHeaders());
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration(corsProperties.getPath(), configuration);
+
+        corsProperties.getPaths().forEach(path -> {
+            log.info("Adding CorsConfiguration for path {}", path);
+            org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+            configuration.setAllowCredentials(path.isAllowCredentials());
+            configuration.setAllowedOriginPatterns(path.getAllowedOrigins());
+            configuration.setAllowedMethods(path.getAllowedMethods());
+            configuration.setAllowedHeaders(path.getAllowedHeaders());
+            source.registerCorsConfiguration(path.getPath(), configuration);
+        });
 
         return source;
     }
