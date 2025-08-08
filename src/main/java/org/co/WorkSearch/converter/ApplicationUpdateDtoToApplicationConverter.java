@@ -9,6 +9,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class ApplicationUpdateDtoToApplicationConverter {
+    /**
+     * Merge {@link ApplicationUpdateDto} into {@link Application} objects.
+     * @param application The {@link Application} entity.
+     * @param source The {@link ApplicationUpdateDto} object.
+     * @return A merged {@link Application} object with updated properties.
+     */
     @NonNull
     public Application convert(@NonNull Application application, @NonNull ApplicationUpdateDto source) {
         application.setCompanyName(source.getCompanyName());

@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationCreationDtoToApplicationConverter {
+    /**
+     * Convert from {@link ApplicationCreationDto} to {@link Application} objects.
+     * @param source The {@link ApplicationCreationDto} object.
+     * @return A converted {@link Application} object.
+     */
     @NonNull
     public Application convert(@NonNull ApplicationCreationDto source) {
         return Application.builder()

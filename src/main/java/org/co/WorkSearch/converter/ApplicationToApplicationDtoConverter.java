@@ -2,12 +2,16 @@ package org.co.WorkSearch.converter;
 
 import org.co.WorkSearch.dto.ApplicationDto;
 import org.co.WorkSearch.model.Application;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationToApplicationDtoConverter {
+    /**
+     * Convert an {@link Application} entity into an {@link ApplicationDto} object.
+     * @param source The {@link Application} entity.
+     * @return A converted {@link ApplicationDto} object.
+     */
     @NonNull
     public ApplicationDto convert(@NonNull Application source) {
         return ApplicationDto.builder()
