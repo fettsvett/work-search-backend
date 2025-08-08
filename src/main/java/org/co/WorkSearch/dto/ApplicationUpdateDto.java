@@ -1,5 +1,8 @@
 package org.co.WorkSearch.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Value;
 
@@ -8,9 +11,16 @@ import java.time.LocalDate;
 @Value
 @Builder
 public class ApplicationUpdateDto {
+    @NotNull
+    @Min(1)
     Long id;
+    @NotNull
+    @NotEmpty
     String companyName;
+    @NotNull
+    @NotEmpty
     String positionName;
+    @NotNull
     LocalDate applicationDate;
     String salary;
     String website;

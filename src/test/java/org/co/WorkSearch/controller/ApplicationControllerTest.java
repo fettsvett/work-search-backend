@@ -16,8 +16,7 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ApplicationController.class)
 class ApplicationControllerTest {
@@ -50,9 +49,81 @@ class ApplicationControllerTest {
         when(applicationService.createApplication(any(ApplicationCreationDto.class)))
                 .thenReturn(ApplicationDto.builder().id(1L).build());
 
-        mockMvc.perform(post("/applications").content("{}").contentType(MediaType.APPLICATION_JSON))
+        String body = "{\n" +
+                "\t\"companyName\": \"Boeing\",\n" +
+                "\t\"positionName\": \"Mid-Level Backend Developer\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(post("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{id: 1}"));
+    }
+
+    @Test
+    void createApplication_invalidCompanyName_null() throws Exception {
+        String body = "{\n" +
+                "\t\"companyName\": null,\n" +
+                "\t\"positionName\": \"Mid-Level Backend Developer\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(post("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createApplication_invalidCompanyName_blank() throws Exception {
+        String body = "{\n" +
+                "\t\"companyName\": \"\",\n" +
+                "\t\"positionName\": \"Mid-Level Backend Developer\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(post("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createApplication_invalidPositionName_null() throws Exception {
+        String body = "{\n" +
+                "\t\"companyName\": \"Boeing\",\n" +
+                "\t\"positionName\": null,\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(post("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createApplication_invalidPositionName_blank() throws Exception {
+        String body = "{\n" +
+                "\t\"companyName\": \"Boeing\",\n" +
+                "\t\"positionName\": \"\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(post("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createApplication_invalidApplicationDate_null() throws Exception {
+        String body = "{\n" +
+                "\t\"companyName\": \"Boeing\",\n" +
+                "\t\"positionName\": \"Mid-Level Backend Developer\",\n" +
+                "\t\"applicationDate\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(post("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -69,16 +140,143 @@ class ApplicationControllerTest {
         when(applicationService.updateApplication(any(ApplicationUpdateDto.class)))
                 .thenReturn(ApplicationDto.builder().id(1L).build());
 
-        mockMvc.perform(put("/applications").content("{}").contentType(MediaType.APPLICATION_JSON))
+        String body = "{\n" +
+                "\t\"id\": 2,\n" +
+                "\t\"companyName\": \"Jam City\",\n" +
+                "\t\"positionName\": \"Backend Engineer\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"salary\": \"\",\n" +
+                "\t\"website\": \"https://www.jamcity.com/job-openings/\",\n" +
+                "\t\"password\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(put("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{id: 1}"));
     }
 
     @Test
-    void updateApplication_emptyBody() throws Exception {
-        when(applicationService.updateApplication(any(ApplicationUpdateDto.class)))
-                .thenReturn(ApplicationDto.builder().id(1L).build());
+    void updateApplication_invalidId_null() throws Exception {
+        String body = "{\n" +
+                "\t\"id\": null,\n" +
+                "\t\"companyName\": \"Jam City\",\n" +
+                "\t\"positionName\": \"Backend Engineer\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"salary\": \"\",\n" +
+                "\t\"website\": \"https://www.jamcity.com/job-openings/\",\n" +
+                "\t\"password\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
 
+        mockMvc.perform(put("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateApplication_invalidId_lessThanOne() throws Exception {
+        String body = "{\n" +
+                "\t\"id\": 0,\n" +
+                "\t\"companyName\": \"Jam City\",\n" +
+                "\t\"positionName\": \"Backend Engineer\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"salary\": \"\",\n" +
+                "\t\"website\": \"https://www.jamcity.com/job-openings/\",\n" +
+                "\t\"password\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(put("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateApplication_invalidCompanyName_null() throws Exception {
+        String body = "{\n" +
+                "\t\"id\": 2,\n" +
+                "\t\"companyName\": null,\n" +
+                "\t\"positionName\": \"Backend Engineer\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"salary\": \"\",\n" +
+                "\t\"website\": \"https://www.jamcity.com/job-openings/\",\n" +
+                "\t\"password\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(put("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateApplication_invalidCompanyName_blank() throws Exception {
+        String body = "{\n" +
+                "\t\"id\": 2,\n" +
+                "\t\"companyName\": \"\",\n" +
+                "\t\"positionName\": \"Backend Engineer\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"salary\": \"\",\n" +
+                "\t\"website\": \"https://www.jamcity.com/job-openings/\",\n" +
+                "\t\"password\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(put("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateApplication_invalidPositionName_null() throws Exception {
+        String body = "{\n" +
+                "\t\"id\": 2,\n" +
+                "\t\"companyName\": \"Jam City\",\n" +
+                "\t\"positionName\": null,\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"salary\": \"\",\n" +
+                "\t\"website\": \"https://www.jamcity.com/job-openings/\",\n" +
+                "\t\"password\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(put("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateApplication_invalidPositionName_blank() throws Exception {
+        String body = "{\n" +
+                "\t\"id\": 2,\n" +
+                "\t\"companyName\": \"Jam City\",\n" +
+                "\t\"positionName\": \"\",\n" +
+                "\t\"applicationDate\": \"2025-07-29\",\n" +
+                "\t\"salary\": \"\",\n" +
+                "\t\"website\": \"https://www.jamcity.com/job-openings/\",\n" +
+                "\t\"password\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(put("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateApplication_invalidApplicationDate_null() throws Exception {
+        String body = "{\n" +
+                "\t\"id\": 2,\n" +
+                "\t\"companyName\": \"Jam City\",\n" +
+                "\t\"positionName\": \"Backend Engineer\",\n" +
+                "\t\"applicationDate\": null,\n" +
+                "\t\"salary\": \"\",\n" +
+                "\t\"website\": \"https://www.jamcity.com/job-openings/\",\n" +
+                "\t\"password\": null,\n" +
+                "\t\"active\": true\n" +
+                "}";
+
+        mockMvc.perform(put("/applications").content(body).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateApplication_emptyBody() throws Exception {
         mockMvc.perform(put("/applications").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }

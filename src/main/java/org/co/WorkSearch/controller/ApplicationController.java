@@ -1,5 +1,7 @@
 package org.co.WorkSearch.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.co.WorkSearch.converter.ApplicationCreationDtoToApplicationConverter;
 import org.co.WorkSearch.converter.ApplicationToApplicationDtoConverter;
@@ -26,17 +28,17 @@ public class ApplicationController {
     }
 
     @GetMapping("/{id}")
-    public ApplicationDto getApplicationById(@PathVariable Long id) {
+    public ApplicationDto getApplicationById(@Min(1) @PathVariable Long id) {
         return applicationService.getApplication(id);
     }
 
     @PostMapping
-    public ApplicationDto createApplication(@RequestBody ApplicationCreationDto applicationCreationDto) {
+    public ApplicationDto createApplication(@Valid @RequestBody ApplicationCreationDto applicationCreationDto) {
         return applicationService.createApplication(applicationCreationDto);
     }
 
     @PutMapping
-    public ApplicationDto updateApplication(@RequestBody ApplicationUpdateDto applicationUpdateDto) {
+    public ApplicationDto updateApplication(@Valid @RequestBody ApplicationUpdateDto applicationUpdateDto) {
         return applicationService.updateApplication(applicationUpdateDto);
     }
 }
