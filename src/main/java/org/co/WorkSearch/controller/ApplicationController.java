@@ -22,6 +22,10 @@ import java.util.List;
 public class ApplicationController {
     private final ApplicationService applicationService;
 
+    /**
+     * Gets a list of all applications.
+     * @return Every application.
+     */
     @GetMapping
     public List<ApplicationDto> getAllApplications() {
         return applicationService.getAllApplications();
