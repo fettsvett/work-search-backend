@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: Work Search
+  datasource:
+    url: jdbc:postgresql://localhost:5432/worksearch
+    username: worksearch
+    password: RpfKhZlVNGZn7Rlme4io2HWE43aJnG2G
+  jpa:
+    hibernate:
+      ddl-auto: update # or create, create-drop, none
+    show-sql: true
