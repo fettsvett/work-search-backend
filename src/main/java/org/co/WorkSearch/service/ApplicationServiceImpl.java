@@ -2,6 +2,7 @@ package org.co.WorkSearch.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.co.WorkSearch.converter.ApplicationCreationDtoToApplicationConverter;
 import org.co.WorkSearch.converter.ApplicationToApplicationDtoConverter;
 import org.co.WorkSearch.converter.ApplicationUpdateDtoToApplicationConverter;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Service for manipulating Application entities.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
@@ -59,6 +61,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     public ApplicationDto createApplication(ApplicationCreationDto applicationCreationDto) {
         Application application = applicationCreationDtoToApplicationConverter.convert(applicationCreationDto);
 
+        log.debug("Creating application: {}", application);
+
         return applicationToApplicationDtoConverter.convert(applicationRepository.save(application));
     }
 
@@ -76,6 +80,8 @@ public class ApplicationServiceImpl implements ApplicationService {
                                 String.format("Application ID: %d was not found!", applicationUpdateDto.getId())));
 
         Application converted = applicationUpdateDtoToApplicationConverter.convert(application, applicationUpdateDto);
+
+        log.debug("Updating application: {}", converted);
 
         return applicationToApplicationDtoConverter.convert(applicationRepository.save(converted));
     }

@@ -14,13 +14,10 @@ import java.time.LocalDate;
 @Value
 @Builder
 public class ApplicationUpdateDto {
-    @NotNull
     @Min(1)
     Long id;
-    @NotNull
     @NotEmpty
     String companyName;
-    @NotNull
     @NotEmpty
     String positionName;
     @NotNull

@@ -13,10 +13,8 @@ import java.time.LocalDate;
 @Value
 @Builder
 public class ApplicationCreationDto {
-    @NotNull
     @NotEmpty
     String companyName;
-    @NotNull
     @NotEmpty
     String positionName;
     @NotNull
