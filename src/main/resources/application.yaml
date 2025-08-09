@@ -9,7 +9,16 @@ spring:
     hibernate:
       ddl-auto: update # in production never set to update.
     show-sql: true # remove in production
-
+springdoc:
+  show-actuator: true
+  use-management-port: true
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      exposure:
+        include: health, info, swagger-ui, openapi
 work-search:
   cors:
     paths:
