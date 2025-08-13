@@ -21,6 +21,13 @@ public class Authority {
     @Enumerated(EnumType.STRING)
     AuthorityName authority;
 
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "authority=" + authority +
+                '}';
+    }
+
     @FieldNameConstants(onlyExplicitlyIncluded = true, innerTypeName = "Values")
     public enum AuthorityName {
         @FieldNameConstants.Include ROLE_USER,

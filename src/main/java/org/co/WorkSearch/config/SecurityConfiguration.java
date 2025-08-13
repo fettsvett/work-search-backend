@@ -27,12 +27,15 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.OPTIONS).permitAll() // Allow CORS options requests.
                         .requestMatchers(HttpMethod.POST, "/account").permitAll()
-                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll() // Allow errors to be processed into responses
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll() // Allow errors to be sent in response.
                         .anyRequest().authenticated())
+                .httpBasic(_ -> {})
+                .cors(_ -> {})
+                .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 }

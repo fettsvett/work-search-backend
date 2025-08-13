@@ -1,28 +1,29 @@
 package org.co.WorkSearch.components;
 
+import lombok.RequiredArgsConstructor;
 import org.co.WorkSearch.model.Account;
-import org.co.WorkSearch.service.AccountUserDetailService;
-import org.hibernate.Hibernate;
+import org.co.WorkSearch.repositories.AccountRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class AccountAccessor {
+    private final AccountRepository accountRepository;
     public Optional<Account> getCurrentAccount() {
         return Optional.ofNullable(SecurityContextHolder.getContext())
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
-                .filter(AccountUserDetailService.CustomUser.class::isInstance)
-                .map(AccountUserDetailService.CustomUser.class::cast)
-                .map(AccountUserDetailService.CustomUser::getEntity)
-                .map(Hibernate::unproxy)
-                .filter(Account.class::isInstance)
-                .map(Account.class::cast);
+                .filter(User.class::isInstance)
+                .map(User.class::cast)
+                .map(User::getUsername)
+                .map(accountRepository::findByUsername);
     }
 
     public Account getCurrentAccountOrThrow() {

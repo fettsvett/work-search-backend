@@ -1,19 +1,16 @@
 package org.co.WorkSearch.service;
 
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.co.WorkSearch.model.Account;
-import org.co.WorkSearch.model.Authority;
 import org.co.WorkSearch.repositories.AccountRepository;
+import org.co.WorkSearch.repositories.AuthorityRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -23,48 +20,25 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AccountUserDetailService implements UserDetailsService {
     private final AccountRepository accountRepository;
+    private final AuthorityRepository authorityRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("Loading user by username: {}", username);
-        Account account = accountRepository.findByUsername(username);
-        Collection<GrantedAuthority> authorities = account.getAuthorities().stream()
-                .map(Authority::getAuthority)
-                .map(Enum::name)
+        log.debug("Logging in username: {}", username);
+        AccountRepository.AccountLogin account = accountRepository.loginQuery(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("Username: %s was not found!", username)));
+
+        Collection<GrantedAuthority> authorities = authorityRepository.loginQuery(account.id()).stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
-        log.info("Loaded user: {}", account);
-        log.info("Loading user authorities: {}", authorities);
+        log.debug("Loaded user record: {}", account);
+        log.debug("Loading user authorities: {}", authorities);
 
-        return CustomUser.builder()
-                .username(account.getUsername())
-                .password(account.getPassword())
-                .enabled(account.isActive())
+        return User.builder()
+                .username(account.username())
+                .password(account.password())
+                .disabled(!account.active())
                 .authorities(authorities)
-                .entity(account)
                 .build();
-    }
-
-
-    @Value
-    @Builder
-    public static class CustomUser implements UserDetails {
-        String username;
-        String password;
-        boolean enabled;
-        Collection<? extends GrantedAuthority> authorities;
-        Account entity;
-
-        @Override
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append(getClass().getName()).append(" [");
-            sb.append("Username=").append(this.username).append(", ");
-            sb.append("Password=[PROTECTED], ");
-            sb.append("Enabled=").append(this.enabled).append(", ");
-            sb.append("Granted Authorities=").append(this.authorities).append("]");
-            return sb.toString();
-        }
     }
 }

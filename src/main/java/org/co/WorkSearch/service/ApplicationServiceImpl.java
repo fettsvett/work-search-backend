@@ -10,9 +10,11 @@ import org.co.WorkSearch.converter.application.ApplicationUpdateDtoToApplication
 import org.co.WorkSearch.dto.application.ApplicationCreationDto;
 import org.co.WorkSearch.dto.application.ApplicationDto;
 import org.co.WorkSearch.dto.application.ApplicationUpdateDto;
+import org.co.WorkSearch.model.Account;
 import org.co.WorkSearch.model.Application;
 import org.co.WorkSearch.repositories.ApplicationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,10 +62,15 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @return A new and persisted application.
      */
     @Override
+    @Transactional
     public ApplicationDto createApplication(ApplicationCreationDto applicationCreationDto) {
         Application application = applicationCreationDtoToApplicationConverter.convert(applicationCreationDto);
 
-        application.setAccount(accountAccessor.getCurrentAccountOrThrow());
+        Account account = accountAccessor.getCurrentAccountOrThrow();
+
+        log.info("Applications: {}", account.getApplications());
+
+        application.setAccount(account);
 
         log.debug("Creating application: {}", application);
 
