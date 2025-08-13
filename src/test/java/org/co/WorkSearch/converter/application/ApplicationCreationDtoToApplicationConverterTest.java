@@ -1,11 +1,8 @@
-package org.co.WorkSearch.converter;
+package org.co.WorkSearch.converter.application;
 
-import org.co.WorkSearch.dto.ApplicationCreationDto;
+import org.co.WorkSearch.dto.application.ApplicationCreationDto;
 import org.co.WorkSearch.model.Application;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 

@@ -1,9 +1,9 @@
 package org.co.WorkSearch.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.co.WorkSearch.dto.ApplicationCreationDto;
-import org.co.WorkSearch.dto.ApplicationDto;
-import org.co.WorkSearch.dto.ApplicationUpdateDto;
+import org.co.WorkSearch.dto.application.ApplicationCreationDto;
+import org.co.WorkSearch.dto.application.ApplicationDto;
+import org.co.WorkSearch.dto.application.ApplicationUpdateDto;
 
 import java.util.List;
 

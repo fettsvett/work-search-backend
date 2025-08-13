@@ -1,7 +1,7 @@
-package org.co.WorkSearch.converter;
+package org.co.WorkSearch.converter.application;
 
 import lombok.RequiredArgsConstructor;
-import org.co.WorkSearch.dto.ApplicationUpdateDto;
+import org.co.WorkSearch.dto.application.ApplicationUpdateDto;
 import org.co.WorkSearch.model.Application;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;

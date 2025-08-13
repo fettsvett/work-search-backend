@@ -1,4 +1,4 @@
-package org.co.WorkSearch.dto;
+package org.co.WorkSearch.dto.application;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;

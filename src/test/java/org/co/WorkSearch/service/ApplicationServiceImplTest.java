@@ -1,12 +1,12 @@
 package org.co.WorkSearch.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.co.WorkSearch.converter.ApplicationCreationDtoToApplicationConverter;
-import org.co.WorkSearch.converter.ApplicationToApplicationDtoConverter;
-import org.co.WorkSearch.converter.ApplicationUpdateDtoToApplicationConverter;
-import org.co.WorkSearch.dto.ApplicationCreationDto;
-import org.co.WorkSearch.dto.ApplicationDto;
-import org.co.WorkSearch.dto.ApplicationUpdateDto;
+import org.co.WorkSearch.converter.application.ApplicationCreationDtoToApplicationConverter;
+import org.co.WorkSearch.converter.application.ApplicationToApplicationDtoConverter;
+import org.co.WorkSearch.converter.application.ApplicationUpdateDtoToApplicationConverter;
+import org.co.WorkSearch.dto.application.ApplicationCreationDto;
+import org.co.WorkSearch.dto.application.ApplicationDto;
+import org.co.WorkSearch.dto.application.ApplicationUpdateDto;
 import org.co.WorkSearch.model.Application;
 import org.co.WorkSearch.repositories.ApplicationRepository;
 import org.junit.jupiter.api.Test;

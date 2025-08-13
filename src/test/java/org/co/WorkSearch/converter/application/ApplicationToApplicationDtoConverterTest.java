@@ -1,6 +1,6 @@
-package org.co.WorkSearch.converter;
+package org.co.WorkSearch.converter.application;
 
-import org.co.WorkSearch.dto.ApplicationDto;
+import org.co.WorkSearch.dto.application.ApplicationDto;
 import org.co.WorkSearch.model.Application;
 import org.junit.jupiter.api.Test;
 

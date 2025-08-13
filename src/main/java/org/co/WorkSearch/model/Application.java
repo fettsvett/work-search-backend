@@ -37,8 +37,12 @@ public class Application {
     @CreatedDate
     @Column(updatable = false, nullable = false)
     Instant created;
+    @Column(updatable = false, nullable = false)
     @LastModifiedDate
     Instant updated;
+    @JoinColumn(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    Account account;
 
     @Override
     public String toString() {

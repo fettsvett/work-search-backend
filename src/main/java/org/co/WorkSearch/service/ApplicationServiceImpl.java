@@ -3,12 +3,13 @@ package org.co.WorkSearch.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.co.WorkSearch.converter.ApplicationCreationDtoToApplicationConverter;
-import org.co.WorkSearch.converter.ApplicationToApplicationDtoConverter;
-import org.co.WorkSearch.converter.ApplicationUpdateDtoToApplicationConverter;
-import org.co.WorkSearch.dto.ApplicationCreationDto;
-import org.co.WorkSearch.dto.ApplicationDto;
-import org.co.WorkSearch.dto.ApplicationUpdateDto;
+import org.co.WorkSearch.components.AccountAccessor;
+import org.co.WorkSearch.converter.application.ApplicationCreationDtoToApplicationConverter;
+import org.co.WorkSearch.converter.application.ApplicationToApplicationDtoConverter;
+import org.co.WorkSearch.converter.application.ApplicationUpdateDtoToApplicationConverter;
+import org.co.WorkSearch.dto.application.ApplicationCreationDto;
+import org.co.WorkSearch.dto.application.ApplicationDto;
+import org.co.WorkSearch.dto.application.ApplicationUpdateDto;
 import org.co.WorkSearch.model.Application;
 import org.co.WorkSearch.repositories.ApplicationRepository;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
+    private final AccountAccessor accountAccessor;
     private final ApplicationToApplicationDtoConverter applicationToApplicationDtoConverter;
     private final ApplicationCreationDtoToApplicationConverter applicationCreationDtoToApplicationConverter;
     private final ApplicationUpdateDtoToApplicationConverter applicationUpdateDtoToApplicationConverter;
@@ -60,6 +62,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public ApplicationDto createApplication(ApplicationCreationDto applicationCreationDto) {
         Application application = applicationCreationDtoToApplicationConverter.convert(applicationCreationDto);
+
+        application.setAccount(accountAccessor.getCurrentAccountOrThrow());
 
         log.debug("Creating application: {}", application);
 

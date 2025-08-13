@@ -1,8 +1,8 @@
 package org.co.WorkSearch.controller;
 
-import org.co.WorkSearch.dto.ApplicationCreationDto;
-import org.co.WorkSearch.dto.ApplicationDto;
-import org.co.WorkSearch.dto.ApplicationUpdateDto;
+import org.co.WorkSearch.dto.application.ApplicationCreationDto;
+import org.co.WorkSearch.dto.application.ApplicationDto;
+import org.co.WorkSearch.dto.application.ApplicationUpdateDto;
 import org.co.WorkSearch.service.ApplicationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,8 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ApplicationController.class)
 class ApplicationControllerTest {

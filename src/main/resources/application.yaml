@@ -34,3 +34,8 @@ work-search:
           - PUT
           - PATCH
           - DELETE
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
